@@ -1,15 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const Mobiles = require('./models/Mobiles');  // changed from Cars to Mobiles
+const Mobiles = require('./models/Mobiles');  
 
-const app = express();  // APP MEANS SERVER APPLICATION
+const app = express();  
 
-app.use(bodyParser.json());   // Middleware
+app.use(bodyParser.json());   
 
-// connect to MongoDB
+
 mongoose.connect(
-    'mongodb://localhost:27017/store', // connection string
+    'mongodb://localhost:27017/store', 
     {   
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -20,17 +20,17 @@ mongoose.connect(
     console.error("MongoDB connection error:", err)
 );
 
-// wild route
+
 app.get('/', (req, res) => {
     res.send('Mobile Store API is up and running');
 });
 
-// Server listens on port 3000
+
 app.listen(3000, () => 
     console.log('Server is UP & running on PORT 3000')
 );
 
-// Create a Mobile - insert a new mobile
+
 app.post('/mobiles', async (req, res) => {
     try {
         const mobile = new Mobiles(req.body);
@@ -41,7 +41,7 @@ app.post('/mobiles', async (req, res) => {
     }
 });
 
-// Retrieve all mobiles
+
 app.get('/mobiles', async (req, res) => {
     try {
         const mobiles = await Mobiles.find();
@@ -51,7 +51,7 @@ app.get('/mobiles', async (req, res) => {
     }
 });
 
-// Get mobile by ID
+
 app.get('/mobiles/:id', async (req, res) => {
     try {
         const mobile = await Mobiles.findById(req.params.id);
@@ -64,7 +64,7 @@ app.get('/mobiles/:id', async (req, res) => {
     }
 });
 
-// Update mobile by ID
+
 app.put('/mobiles/:id', async (req, res) => {
     try {
         const mobile = await Mobiles.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -77,7 +77,7 @@ app.put('/mobiles/:id', async (req, res) => {
     }
 });
 
-// Delete mobile by ID
+
 app.delete('/mobiles/:id', async (req, res) => {
     try {
         const mobile = await Mobiles.findByIdAndDelete(req.params.id);
